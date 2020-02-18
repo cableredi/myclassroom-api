@@ -5,11 +5,11 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { CLIENT_ORIGIN } = require('./config');
 const errorHandler = require('./error-handler');
-const validateBearerToken = require('./validate-bearer-token');
 const assignmentsRouter = require('./assignments/assignments-router');
 const classesRouter = require('./classes/classes-router');
-const authRouter = require('./auth/auth-router');
-const usersRouter = require('./users/users-router');
+const validateBearerToken = require('./validate-bearer-token');
+
+
 
 const app = express();
 
@@ -23,8 +23,7 @@ app.use(validateBearerToken);
 
 app.use('/api/assignments', assignmentsRouter);
 app.use('/api/classes', classesRouter);
-app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
+
 
 app.get('/', (req, res) => {
   res.json({ok: true});
