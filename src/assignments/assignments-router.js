@@ -125,7 +125,6 @@ assignmentsRouter
       assignemntToUpdate
     )
       .then(updatedAssignement => {
-        console.log('updatedAssign', updatedAssignement)
         res
         .status(201)
         .json(serializeAssignments(updatedAssignement))
