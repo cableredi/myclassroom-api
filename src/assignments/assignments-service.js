@@ -1,9 +1,11 @@
 const AssignmentsService = {
-  getAllAssignments(knex) {
+  getAllAssignments(knex, user_id) {
     return knex
       .select('*')
       .from('assignments')
+      .where('classes.user_id', user_id)
       .leftJoin('classes', 'assignments.class_id', 'classes.class_id')
+      .leftJoin('users', 'users.user_id', 'classes.user_id')
       .orderBy([{ column: 'due_date' }, { column: 'title', order: 'asc' }])
   },
   getById(knex, id) {

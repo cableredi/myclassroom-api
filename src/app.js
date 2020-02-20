@@ -7,9 +7,6 @@ const { CLIENT_ORIGIN } = require('./config');
 const errorHandler = require('./error-handler');
 const assignmentsRouter = require('./assignments/assignments-router');
 const classesRouter = require('./classes/classes-router');
-const validateBearerToken = require('./validate-bearer-token');
-
-
 
 const app = express();
 
@@ -19,11 +16,8 @@ app.use(morgan((CLIENT_ORIGIN === 'production') ? 'tiny' : 'common', {
 app.use(cors());
 app.use(helmet());
 
-app.use(validateBearerToken);
-
 app.use('/api/assignments', assignmentsRouter);
 app.use('/api/classes', classesRouter);
-
 
 app.get('/', (req, res) => {
   res.json({ok: true});

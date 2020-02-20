@@ -2,46 +2,44 @@ const path = require('path');
 const express = require('express');
 const xss = require('xss');
 const logger = require('../logger')
-const ClassesService = require('./classes-service');
-const { requireAuth } = require('../middleware/basic-auth');
+const ClassesService = require('./users-service');
+const helpers = require('../helpers/helpers');
 
-const classesRouter = express.Router();
+const usersRouter = express.Router();
 const jsonParser = express.json();
 
-const serializeClasses = schoolClass => ({
-  class_id: schoolClass.class_id,
-  class_name: xss(schoolClass.class_name),
-  user_id: schoolClass.user_id,
-  days: xss(schoolClass.days),
-  times: xss(schoolClass.times),
-  location: xss(schoolClass.location),
-  room: xss(schoolClass.room)
+const serializeUser = user => ({
+  user_id: user.class_id,
+  user_name: xss(user.user_name),
+  password: user.password,
+  role: xss(user.role),
+  first_name: xss(user.first_name),
+  last_name: xss(user.last_name),
+  date_created: xss(user.date_created),
+  date_modified: xss(user.date_modified)
 })
 
 classesRouter
   .route('/')
 
-  .get(requireAuth, (req, res, next) => {
-    ClassesService.getAllClasses(
-      req.app.get('db'),
-      req.user.user_id
-    )
+  .get((req, res, next) => {
+    ClassesService.getAllClasses(req.app.get('db'))
       .then(classes => {
         res.json(classes.map(serializeClasses))
       })
       .catch(next)
   })
 
-  .post(requireAuth, jsonParser, (req, res, next) => {
+  .post(jsonParser, (req, res, next) => {
     const {
-      class_name, days, times, location, room
+      class_name, user_id, days, times, location, room
     } = req.body
 
     const newClass = {
-      class_name, days, times, location, room
+      class_name, user_id, days, times, location, room
     };
 
-    for (const field of ['class_name']) {
+    for (const field of ['class_name', 'user_id']) {
       if (!newClass[field]) {
         logger.error(`${field} is required`)
         return res.status(400).send({
@@ -49,8 +47,6 @@ classesRouter
         })
       }
     };
-
-    newClass.user_id = req.user.user_id
 
     ClassesService.insertClass(
       req.app.get('db'),
@@ -69,7 +65,6 @@ classesRouter
 
   classesRouter
   .route('/:class_id')
-  .all(requireAuth)
 
   .all((req, res, next) => {
     ClassesService.getById(

@@ -3,6 +3,7 @@ const express = require('express');
 const xss = require('xss');
 const logger = require('../logger')
 const AssignmentsService = require('./assignments-service');
+const { requireAuth } = require('../middleware/basic-auth');
 
 const assignmentsRouter = express.Router();
 const jsonParser = express.json();
@@ -20,8 +21,11 @@ const serializeAssignments = assignment => ({
 assignmentsRouter
   .route('/')
 
-  .get((req, res, next) => {
-    AssignmentsService.getAllAssignments(req.app.get('db'))
+  .get(requireAuth, (req, res, next) => {
+    AssignmentsService.getAllAssignments(
+      req.app.get('db'),
+      req.user.user_id
+    )
       .then(assignments => {
         res.json(assignments.map(serializeAssignments))
       })
@@ -63,6 +67,7 @@ assignmentsRouter
 
 assignmentsRouter
   .route('/:assignment_id')
+  .all(requireAuth)
 
   .all((req, res, next) => {
     AssignmentsService.getById(

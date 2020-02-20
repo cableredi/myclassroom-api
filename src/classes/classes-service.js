@@ -1,16 +1,18 @@
 const ClassesService = {
-  getAllClasses(knex) {
+  getAllClasses(knex, user_id) {
     return knex
       .select('*')
       .from('classes')
+      .where('classes.user_id', user_id)
+      .leftJoin('users', 'users.user_id', 'classes.user_id')
       .orderBy('class_name')
   },
   getById(knex, id) {
     return knex
-    .from('classes')
-    .select('*')
-    .where('class_id', id)
-    .first()
+      .from('classes')
+      .select('*')
+      .where('class_id', id)
+      .first()
   },
   updateClass(knex, id, newClassesFields) {
     return knex('classes')
