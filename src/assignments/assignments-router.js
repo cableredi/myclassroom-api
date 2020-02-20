@@ -3,7 +3,7 @@ const express = require('express');
 const xss = require('xss');
 const logger = require('../logger')
 const AssignmentsService = require('./assignments-service');
-const { requireAuth } = require('../middleware/basic-auth');
+const { requireAuth } = require('../middleware/jwt-auth');
 
 const assignmentsRouter = express.Router();
 const jsonParser = express.json();
