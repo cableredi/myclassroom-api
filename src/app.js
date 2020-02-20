@@ -19,7 +19,7 @@ app.use(helmet());
 
 app.use('/api/assignments', assignmentsRouter);
 app.use('/api/classes', classesRouter);
-app.unsubscribe('/api/login', authRouter);
+app.use('/api/auth', authRouter);
 
 app.get('/', (req, res) => {
   res.json({ok: true});
