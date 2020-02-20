@@ -7,6 +7,7 @@ const { CLIENT_ORIGIN } = require('./config');
 const errorHandler = require('./error-handler');
 const assignmentsRouter = require('./assignments/assignments-router');
 const classesRouter = require('./classes/classes-router');
+const authRouter = require('./auth/auth-router');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(helmet());
 
 app.use('/api/assignments', assignmentsRouter);
 app.use('/api/classes', classesRouter);
+app.unsubscribe('/api/login', authRouter);
 
 app.get('/', (req, res) => {
   res.json({ok: true});
