@@ -4,6 +4,7 @@ CREATE TABLE users (
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
   password TEXT NOT NULL,
+  role TEXT NOT NULL,
   teacher_user_id INTEGER NULL,
   date_created TIMESTAMP DEFAULT now() NOT NULL
 );

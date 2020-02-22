@@ -12,7 +12,7 @@ VALUES (
   'teacher',
   'Mary',
   'Smith',
-  1
+  ''
 ),
 (
   'student',

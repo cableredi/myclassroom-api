@@ -22,9 +22,11 @@ assignmentsRouter
   .route('/')
 
   .get(requireAuth, (req, res, next) => {
+    userInfo = req.user.role.toLowerCase() === 'teacher' ? req.user.user_id : req.user.teacher_user_id ;
+
     AssignmentsService.getAllAssignments(
       req.app.get('db'),
-      req.user.teacher_user_id
+      userInfo
     )
       .then(assignments => {
         res.json(assignments.map(serializeAssignments))

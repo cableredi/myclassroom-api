@@ -22,12 +22,6 @@ classesRouter
   .route('/')
 
   .get(requireAuth, (req, res, next) => {
-    if (req.user.role !== 'teacher') {
-      return res.status(401).send({
-        error: { message: `Unauthorized request` }
-      })
-    }
-
     ClassesService.getAllClasses(
       req.app.get('db'),
       req.user.user_id

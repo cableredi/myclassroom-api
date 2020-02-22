@@ -2,7 +2,7 @@ INSERT INTO classes (
   class_name,
   user_id,
   days,
-  time,
+  times,
   location,
   room
 )

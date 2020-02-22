@@ -36,18 +36,23 @@ const UsersService = {
 
     return null
   },
+  validateUserName(user_name) {
+    if (user_name.startsWith(' ') || user_name.endsWith(' ')) {
+      return 'User Name must not start or end with empty spaces'
+    }
+  },
   hashPassword(password) {
     return bcrypt.hash(password, 12)
   },
   serializeUser(user) {
     return {
       user_id: user.user_id,
+      teacher_user_id: user.teacher_user_id,
       first_name: xss(user.first_name),
       last_name: xss(user.last_name),
       user_name: xss(user.user_name),
       role: xss(user.role),
       date_created: new Date(user.date_created),
-      date_modified: new Date(user.date_modified),
     }
   },
 }

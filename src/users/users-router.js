@@ -15,10 +15,11 @@ usersRouter
           error: `Missing '${field}' in request body`
         })
 
-    // TODO: check user_name doesn't start with spaces
+    const userNameError = UsersService.validateUserName(user_name)
+    if (userNameError)
+      return res.status(400).json({ error: userNameError })
 
     const passwordError = UsersService.validatePassword(password)
-
     if (passwordError)
       return res.status(400).json({ error: passwordError })
 
@@ -39,7 +40,6 @@ usersRouter
               last_name,
               role,
               date_created: 'now()',
-              date_modified: 'now()',
             }
 
             return UsersService.insertUser(
