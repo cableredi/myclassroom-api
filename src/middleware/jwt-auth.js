@@ -2,6 +2,7 @@ const AuthService = require('../auth/auth-service');
 
 function requireAuth(req, res, next) {
   const authToken = req.get('Authorization') || '';
+  const roles = ['teacher', 'student'];
 
   let bearerToken;
 
@@ -23,6 +24,12 @@ function requireAuth(req, res, next) {
         return res.status(401).json({ error: 'Unauthorized request' });
 
       req.user = user;
+      
+      //check if role is a teacher or student
+      if ( roles.length && !roles.includes(req.user.role) ) {
+        return res.status(401).json({ error: 'Unauthorized request '});
+      }
+
       next();
     })
     .catch(err => {

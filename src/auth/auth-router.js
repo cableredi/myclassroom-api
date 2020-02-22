@@ -34,7 +34,7 @@ authRouter
               })
 
             const sub = dbUser.user_name
-            const payload = { user_id: dbUser.user_id }
+            const payload = { user_id: dbUser.user_id, role: dbUser.role }
             res.send({
               authToken: AuthService.createJwt(sub, payload),
             })
@@ -46,7 +46,7 @@ authRouter
   authRouter
     .post('/refresh', requireAuth, (req, res) => {
       const sub = req.user.user_name
-      const payload = { user_id: req.user.user_id }
+      const payload = { user_id: req.user.user_id, role: dbUser.role }
       res.send({
         authToken: AuthService.createJwt(sub, payload),
       })

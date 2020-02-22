@@ -24,7 +24,7 @@ assignmentsRouter
   .get(requireAuth, (req, res, next) => {
     AssignmentsService.getAllAssignments(
       req.app.get('db'),
-      req.user.user_id
+      req.user.teacher_user_id
     )
       .then(assignments => {
         res.json(assignments.map(serializeAssignments))

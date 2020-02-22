@@ -22,6 +22,12 @@ classesRouter
   .route('/')
 
   .get(requireAuth, (req, res, next) => {
+    if (req.user.role !== 'teacher') {
+      return res.status(401).send({
+        error: { message: `Unauthorized request` }
+      })
+    }
+
     ClassesService.getAllClasses(
       req.app.get('db'),
       req.user.user_id
@@ -33,6 +39,12 @@ classesRouter
   })
 
   .post(requireAuth, jsonParser, (req, res, next) => {
+    if (req.user.role !== 'teacher') {
+      return res.status(401).send({
+        error: { message: `Unauthorized request` }
+      })
+    }
+
     const {
       class_name, days, times, location, room
     } = req.body
@@ -69,9 +81,14 @@ classesRouter
 
   classesRouter
   .route('/:class_id')
-  .all(requireAuth)
 
-  .all((req, res, next) => {
+  .all(requireAuth, (req, res, next) => {
+    if (req.user.role !== 'teacher') {
+      return res.status(401).send({
+        error: { message: `Unauthorized request` }
+      })
+    }
+    
     ClassesService.getById(
       req.app.get('db'),
       req.params.class_id

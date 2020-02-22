@@ -4,6 +4,6 @@ CREATE TABLE users (
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
   password TEXT NOT NULL,
-  date_created TIMESTAMP DEFAULT now() NOT NULL,
-  date_modified TIMESTAMP
+  teacher_user_id INTEGER NULL,
+  date_created TIMESTAMP DEFAULT now() NOT NULL
 );
