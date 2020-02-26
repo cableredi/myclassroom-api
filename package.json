@@ -13,7 +13,7 @@
     "deploy": "git push heroku master"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kimberly Cable",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
