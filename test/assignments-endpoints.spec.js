@@ -2,7 +2,7 @@ const knex = require('knex');
 const fixtures = require('./myclassroom-fixtures');
 const app = require('../src/app');
 
-describe.only('Assignments Endpoints', () => {
+describe('Assignments Endpoints', () => {
   let db;
 
   before('make knex instance', () => {
@@ -22,6 +22,12 @@ describe.only('Assignments Endpoints', () => {
     const testUsers = fixtures.makeUsersArray();
     const testClasses = fixtures.makeClassesArray();
 
+    beforeEach('insert users', () => {
+      return db
+        .into('users')
+        .insert(testUsers)
+    })
+
     context(`Given no assignments`, () => {
       it(`responds with 200 and an empty list`, () => {
         return supertest(app)
@@ -33,12 +39,6 @@ describe.only('Assignments Endpoints', () => {
 
     context('Given there are assignments in the database', () => {
       const testAssignments = fixtures.makeAssignmentsArray();
-
-      beforeEach('insert users', () => {
-        return db
-          .into('users')
-          .insert(testUsers)
-      })
 
       beforeEach('insert classes', () => {
         return db
@@ -199,11 +199,10 @@ describe.only('Assignments Endpoints', () => {
     })
 
     context('Given there are assignments in the database', () => {
-      it('responds with 204 and updates the class', () => {
+      it('responds with 204 and updates the assignment', () => {
         const idToUpdate = 1;
-        const updateAssignment = {
+        const updatedAssignment = {
           "class_id": 1,
-          "due_date": new Date(),
           "title": "Updated Assignment 1",
           "notes": "Updated Notes 1",
           "category": "Homework"
@@ -211,12 +210,12 @@ describe.only('Assignments Endpoints', () => {
 
         const expectedAssignment = {
           ...testAssignments[idToUpdate - 1],
-          ...updateAssignment
+          ...updatedAssignment
         };
 
         return supertest(app)
           .patch(`/api/assignments/${idToUpdate}`)
-          .send(updateAssignment)
+          .send(updatedAssignment)
           .set('Authorization', fixtures.makeAuthHeader(testUsers[0]))
           .expect(204)
           .then(res =>
@@ -226,8 +225,8 @@ describe.only('Assignments Endpoints', () => {
               .expect(200)
               .expect(res => {
                 expect(res.body.class_id).to.eql(expectedAssignment.class_id)
-                const expectedDueDate = new Date().toLocaleString('en', { timeZone: 'UTC' })
-                const actualDueDate = new Date(res.body.due_date).toLocaleString()
+                const expectedDueDate = new Date(expectedAssignment.due_date).getMonth() + new Date(expectedAssignment.due_date).getDay() + new Date(expectedAssignment.due_date).getFullYear()
+                const actualDueDate = new Date(res.body.due_date).getMonth() + new Date(res.body.due_date).getDay() + new Date(res.body.due_date).getFullYear()
                 expect(actualDueDate).to.eql(expectedDueDate)
                 expect(res.body.title).to.eql(expectedAssignment.title)
                 expect(res.body.notes).to.eql(expectedAssignment.notes)
@@ -239,13 +238,27 @@ describe.only('Assignments Endpoints', () => {
     })
   });
 
-  describe.only(`DELETE/api /assignments/:assignment_id`, () => {
+  describe(`DELETE/api /assignments/:assignment_id`, () => {
     const testUsers = fixtures.makeUsersArray();
+    const testClasses = fixtures.makeClassesArray();
+    const testAssignments = fixtures.makeAssignmentsArray();
 
     beforeEach('insert users', () => {
       return db
         .into('users')
         .insert(testUsers)
+    })
+
+    beforeEach('insert classes', () => {
+      return db
+        .into('classes')
+        .insert(testClasses)
+    })
+
+    beforeEach('insert assignments', () => {
+      return db
+        .into('assignments')
+        .insert(testAssignments)
     })
 
     context(`Given no assignments`, () => {
@@ -259,21 +272,6 @@ describe.only('Assignments Endpoints', () => {
     });
 
     context('Given there are assignments in the database', () => {
-      const testClasses = fixtures.makeClassesArray();
-      const testAssignments = fixtures.makeAssignmentsArray();
-
-      beforeEach('insert classes', () => {
-        return db
-          .into('classes')
-          .insert(testClasses)
-      })
-
-      beforeEach('insert assignments', () => {
-        return db
-          .into('assignments')
-          .insert(testAssignments)
-      })
-
       it('responds with 204 and removes the assignment', () => {
         const idToRemove = 2
         const expectedAssignment = testAssignments.filter(assignment => assignment.assignment_id !== idToRemove)
@@ -289,7 +287,7 @@ describe.only('Assignments Endpoints', () => {
               .expect(res => {
                 for (let i = 0; i < expectedAssignment.length; i++) {
                   expect(res.body[i].class_id).to.eql(expectedAssignment[i].class_id)
-                  const expectedDueDate = new Date(expectedAssignment[i].reported_on).getMonth() + new Date(expectedAssignment[i].reported_on).getDay() + new Date(expectedAssignment[i].reported_on).getFullYear()
+                  const expectedDueDate = new Date(expectedAssignment[i].due_date).getMonth() + new Date(expectedAssignment[i].due_date).getDay() + new Date(expectedAssignment[i].due_date).getFullYear()
                   const actualDueDate = new Date(res.body[i].due_date).getMonth() + new Date(res.body[i].due_date).getDay() + new Date(res.body[i].due_date).getFullYear()
                   expect(actualDueDate).to.eql(expectedDueDate)
                   expect(res.body[i].title).to.eql(expectedAssignment[i].title)

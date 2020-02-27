@@ -13,6 +13,9 @@
     "deploy": "git push heroku master"
   },
   "keywords": [],
+  "engines": {
+    "node": "12.13.0"
+  },
   "author": "Kimberly Cable",
   "license": "ISC",
   "dependencies": {

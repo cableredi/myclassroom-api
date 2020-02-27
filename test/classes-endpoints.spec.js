@@ -11,15 +11,21 @@ describe('Classes Endpoints', () => {
       connection: process.env.TEST_DATABASE_URL,
     })
     app.set('db', db)
-    db.raw('TRUNCATE classes RESTART IDENTITY CASCADE')
+    db.raw('TRUNCATE users, classes RESTART IDENTITY CASCADE')
   });
 
-  afterEach('cleanup', () => db.raw('TRUNCATE classes RESTART IDENTITY CASCADE'));
+  afterEach('cleanup', () => db.raw('TRUNCATE users, classes RESTART IDENTITY CASCADE'));
 
   after('disconnect from db', () => db.destroy())
 
   describe('GET /api/classes', () => {
     const testUsers = fixtures.makeUsersArray();
+
+    beforeEach('insert users', () => {
+      return db
+        .into('users')
+        .insert(testUsers)
+    })
 
     context(`Given no classes`, () => {
       it(`responds with 200 and an empty list`, () => {
@@ -32,12 +38,6 @@ describe('Classes Endpoints', () => {
 
     context('Given there are classes in the database', () => {
       const testClasses = fixtures.makeClassesArray();
-
-      beforeEach('insert users', () => {
-        return db
-          .into('users')
-          .insert(testUsers)
-      })
 
       beforeEach('insert classes', () => {
         return db
@@ -56,6 +56,12 @@ describe('Classes Endpoints', () => {
 
   describe(`POST /api/classes`, () => {
     const testUsers = fixtures.makeUsersArray();
+
+    beforeEach('insert users', () => {
+      return db
+        .into('users')
+        .insert(testUsers)
+    })
 
     it(`creates a class, responding with 201 and the new class`, function () {
       this.retries(3)
@@ -95,6 +101,12 @@ describe('Classes Endpoints', () => {
     const testUsers = fixtures.makeUsersArray();
     const testClasses = fixtures.makeClassesArray();
 
+    beforeEach('insert users', () => {
+      return db
+        .into('users')
+        .insert(testUsers)
+    })
+
     beforeEach('insert classes', () => {
       return db
         .into('classes')
@@ -115,6 +127,12 @@ describe('Classes Endpoints', () => {
   describe(`PATCH /api/classes/:class_id`, () => {
     const testUsers = fixtures.makeUsersArray();
     const testClasses = fixtures.makeClassesArray();
+
+    beforeEach('insert users', () => {
+      return db
+        .into('users')
+        .insert(testUsers)
+    })
 
     beforeEach('insert classes', () => {
       return db
@@ -175,6 +193,12 @@ describe('Classes Endpoints', () => {
 
   describe(`DELETE/api /classes/:class_id`, () => {
     const testUsers = fixtures.makeUsersArray();
+
+    beforeEach('insert users', () => {
+      return db
+        .into('users')
+        .insert(testUsers)
+    })
 
     context(`Given no classes`, () => {
       it(`responds with 404`, () => {

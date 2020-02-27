@@ -22,7 +22,7 @@ assignmentsRouter
   .route('/')
 
   .get(requireAuth, (req, res, next) => {
-    userInfo = req.user.role.toLowerCase() === 'teacher' ? req.user.user_id : req.user.teacher_user_id ;
+    userInfo = req.user.role.toLowerCase() === 'teacher' ? req.user.user_id : req.user.teacher_user_id;
 
     AssignmentsService.getAllAssignments(
       req.app.get('db'),
@@ -56,14 +56,14 @@ assignmentsRouter
       req.app.get('db'),
       newAssignment
     )
-    .then(assignment => {
-      logger.info(`Assignments with id ${assignment.assignment_id} created.`)
-      res
-        .status(201)
-        .location(path.posix.join(req.originalUrl, `/${assignment.assignment_id}`))
-        .json(serializeAssignments(assignment))
-    })
-    .catch(next)
+      .then(assignment => {
+        logger.info(`Assignments with id ${assignment.assignment_id} created.`)
+        res
+          .status(201)
+          .location(path.posix.join(req.originalUrl, `/${assignment.assignment_id}`))
+          .json(serializeAssignments(assignment))
+      })
+      .catch(next)
 
   })
 
@@ -92,12 +92,12 @@ assignmentsRouter
     res.json(serializeAssignments(res.assignment))
   })
 
-  .delete( (req, res, next) => {
+  .delete((req, res, next) => {
     AssignmentsService.deleteAssignment(
       req.app.get('db'),
       req.params.assignment_id
     )
-      .then( () => {
+      .then(() => {
         res.status(204).end()
       })
       .catch(next)
@@ -108,11 +108,11 @@ assignmentsRouter
       class_id, due_date, title, notes, category
     } = req.body
 
-    const assignemntToUpdate = {
+    const assignmentToUpdate = {
       class_id, due_date, title, notes, category
     };
 
-    const numberOfValues = Object.values(assignemntToUpdate).filter(Boolean).length
+    const numberOfValues = Object.values(assignmentToUpdate).filter(Boolean).length
     if (numberOfValues === 0) {
       return res.status(400).json({
         error: {
@@ -124,12 +124,10 @@ assignmentsRouter
     AssignmentsService.updateAssignment(
       req.app.get('db'),
       req.params.assignment_id,
-      assignemntToUpdate
+      assignmentToUpdate
     )
-      .then(updatedAssignement => {
-        res
-        .status(201)
-        .json(serializeAssignments(updatedAssignement))
+      .then(numRowsAffected => {
+        res.status(204).end()
       })
       .catch(next)
 
