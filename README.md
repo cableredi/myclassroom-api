@@ -1,4 +1,4 @@
-# MyClassroom ![MyClassroom](./src/images/Logo-thumbnail.svg)
+# MyClassroom ![MyClassroom](./src/Components/Images/Logo-thumbnail.svg)
 
 My Classroom is a simple and effective way for teachers/professors/tutors/etc to effectively communicate to his/her students the upcoming assignments, tests, quizzes, projects, etc.
 
@@ -16,27 +16,27 @@ My Classroom is easy to use
 
 ## Screenshots
 #### Landing page: [https://myclassroom.now.sh/](https://myclassroom.now.sh/)
-![Landing Page](./src/images/Landing.png)
+![Landing Page](./src/Components/Images/Landing.png)
 
 #### Calendar page:
-![Calendar Page](./src/images/Calendar.png)
+![Calendar Page](./src/Components/Images/Calendar.png)
 
 #### List of Assignments per Day page:
-![List of Assignments per Day Page](./src/images/Calendar-Assignments.png)
+![List of Assignments per Day Page](./src/Components/Images/Calendar-Assignments.png)
 
 #### Classes page:
-![Classes Page](./src/images/Classes.png)
+![Classes Page](./src/Components/Images/Classes.png)
 
 
 ## MyClassroom API
 **/api/assignments**
-CRUD operations for assignments table
+CRUD operations for assignments
 
 **/api/classes/:**
-CRUD operations for classes table
+CRUD operations for classes
 
 **/api/users/:**
-Operations for users table
+CR operations for users
 
 **/api/auth/:**
 Validate Authorization
