@@ -9,7 +9,6 @@ My Classroom is a simple and effective way for teachers/professors/tutors/etc to
 **Parents:** Just log in as your student and you can see what your child's assignments are to help keep them on track
 
 ## Check it out
-***
 [https://myclassroom.now.sh/](https://myclassroom.now.sh/)
 
 
@@ -95,11 +94,9 @@ POST /api/users
 ```
 
 ## Source Code
-```
 MyClassroom Client: [https://github.com/cableredi/MyClassroom](https://github.com/cableredi/MyClassroom)
 
 MyClassroom API: [https://github.com/cableredi/myclassroom-api](https://github.com/cableredi/myclassroom-api)
-```
 
 ## Technology Used
 ```
