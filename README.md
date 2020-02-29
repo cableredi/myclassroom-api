@@ -1,4 +1,4 @@
-# MyClassroom ![MyClassroom](./src/Components/Images/Logo-thumbnail.svg)
+# MyClassroom ![MyClassroom](./src/images/Logo-thumbnail.svg)
 
 My Classroom is a simple and effective way for teachers/professors/tutors/etc to effectively communicate to his/her students the upcoming assignments, tests, quizzes, projects, etc.
 
@@ -16,16 +16,16 @@ My Classroom is easy to use
 
 ## Screenshots
 #### Landing page: [https://myclassroom.now.sh/](https://myclassroom.now.sh/)
-![Landing Page](./src/Components/Images/Landing.png)
+![Landing Page](./src/images/Landing.png)
 
 #### Calendar page:
-![Calendar Page](./src/Components/Images/Calendar.png)
+![Calendar Page](./src/images/Calendar.png)
 
 #### List of Assignments per Day page:
-![List of Assignments per Day Page](./src/Components/Images/Calendar-Assignments.png)
+![List of Assignments per Day Page](./src/images/Calendar-Assignments.png)
 
 #### Classes page:
-![Classes Page](./src/Components/Images/Classes.png)
+![Classes Page](./src/images/Classes.png)
 
 
 ## MyClassroom API
