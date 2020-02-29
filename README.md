@@ -16,7 +16,7 @@ My Classroom is easy to use
 
 ## Screenshots
 #### Landing page: [https://myclassroom.now.sh/](https://myclassroom.now.sh/)
-![Landing Page](./src/mages/Landing.png)
+![Landing Page](./src/images/Landing.png)
 
 #### Calendar page:
 ![Calendar Page](./src/images/Calendar.png)
