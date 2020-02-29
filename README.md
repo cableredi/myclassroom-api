@@ -2,19 +2,19 @@
 
 My Classroom is a simple and effective way for teachers/professors/tutors/etc to effectively communicate to his/her students the upcoming assignments, tests, quizzes, projects, etc.
 
-My Classroom is easy to use
+**Teachers:** Just add your assignments and your students will be able to see what's coming up
 
-**Teachers:** Just add your assignments and your students will be able to see what's up next
-
-**Students:** Just log in and view the Calendar to see what is coming up
+**Students:** Just log in and view the Calendar to see what assignments are due
 
 **Parents:** Just log in as your student and you can see what your child's assignments are to help keep them on track
 
 ## Check it out
+***
 [https://myclassroom.now.sh/](https://myclassroom.now.sh/)
 
 
 ## Screenshots
+***
 #### Landing page: [https://myclassroom.now.sh/](https://myclassroom.now.sh/)
 ![Landing Page](./src/images/Landing.png)
 
@@ -29,22 +29,79 @@ My Classroom is easy to use
 
 
 ## MyClassroom API
-**/api/assignments**
-CRUD operations for assignments
+*******
+### **Get all Assignments**
+```
+GET /api/assignments
+```
+### **Get an Assignment**
+```
+GET /api/assignments/id
+```
 
-**/api/classes/:**
-CRUD operations for classes
+### **Add an Assignment**
+```
+POST /api/assignments
+```
 
-**/api/users/:**
-CR operations for users
+### **Delete an Assignment**
+```
+DELETE /api/assignments/id
+```
 
-**/api/auth/:**
-Validate Authorization
+### **Update an Assignment**
+```
+PATCH /api/assignments/id
+```
+
+### **Get all Classes**
+```
+GET /api/classes
+```
+
+### **Get a Class**
+```
+GET /api/classes/id
+```
+
+### **Add a Class**
+```
+POST /api/classes
+```
+
+### **Delete a Class**
+```
+DELETE /api/classes/id
+```
+
+### **Update a Class**
+```
+PATCH /api/classes/id
+```
+
+### **Authenticate Login**
+```
+POST /api/auth/login
+```
+
+### **Authenticate Refresh**
+```
+POST /api/auth/refresh
+```
+
+### **Validate Users**
+```
+POST /api/users
+```
 
 ## Source Code
+```
 MyClassroom Client: [https://github.com/cableredi/MyClassroom](https://github.com/cableredi/MyClassroom)
 
 MyClassroom API: [https://github.com/cableredi/myclassroom-api](https://github.com/cableredi/myclassroom-api)
+```
 
 ## Technology Used
+```
 HTML5, SCSS/CSS, Node.js, React, Express, PostgreSQL
+```
