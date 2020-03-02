@@ -88,7 +88,7 @@ POST /api/auth/login
 POST /api/auth/refresh
 ```
 
-### **Validate Users**
+### **Register Users**
 ```
 POST /api/users
 ```
