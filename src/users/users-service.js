@@ -17,6 +17,12 @@ const UsersService = {
       .returning('*')
       .then(([user]) => user)
   },
+  getStudents(db, user_id) {
+    return db
+    .select('*')
+    .from('users')
+    .where('teacher_user_id', user_id)
+  },
   validatePassword(password) {
     if (password.length < 8) {
       return 'Password be longer than 8 characters'
@@ -54,7 +60,7 @@ const UsersService = {
       role: xss(user.role),
       date_created: new Date(user.date_created),
     }
-  },
+  }
 }
 
 module.exports = UsersService

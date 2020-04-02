@@ -1,9 +1,21 @@
 const express = require('express');
 const path = require('path');
 const UsersService = require('./users-service');
+const { requireAuth } = require('../middleware/jwt-auth');
+const xss = require('xss');
 
 const usersRouter = express.Router();
 const jsonBodyParser = express.json();
+
+const serializeStudents = student => ({
+  user_id: student.user_id,
+  teacher_user_id: student.teacher_user_id,
+  first_name: xss(student.first_name),
+  last_name: xss(student.last_name),
+  user_name: xss(student.user_name),
+  role: xss(student.role),
+  date_created: new Date(student.date_created),
+})
 
 usersRouter
   .post('/', jsonBodyParser, (req, res, next) => {
@@ -58,5 +70,18 @@ usersRouter
       .catch(next)
   });
 
+  usersRouter
+    .get('/', requireAuth, (req, res, next) => {
+      userInfo = req.user.user_id;
+  
+      UsersService.getStudents(
+        req.app.get('db'),
+        userInfo
+      )
+        .then(students => {
+          res.json(students.map(serializeStudents))
+        })
+        .catch(next)
+    })
 
 module.exports = usersRouter;
