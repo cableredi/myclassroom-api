@@ -8,9 +8,6 @@ My Classroom is a simple and effective way for teachers/professors/tutors/etc to
 
 **Parents:** Just log in as your student and you can see what your child's assignments are to help keep them on track
 
-## Check it out
-[https://myclassroom.now.sh/](https://myclassroom.now.sh/)
-
 
 ## Screenshots
 ***
